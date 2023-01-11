@@ -1,6 +1,5 @@
 package br.com.senior.clinic.agendamento;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -107,6 +106,9 @@ public class AgendamentoService {
 
 	public void delete(Integer id) {
 
+		if (agendamentoRepository.findById(id) == null) {
+			throw new IllegalArgumentException("Agendamento dont exist!");
+		}
 		agendamentoRepository.getReferenceById(id).delete();
 
 	}

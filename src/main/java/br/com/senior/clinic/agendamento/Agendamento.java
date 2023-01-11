@@ -20,7 +20,7 @@ public class Agendamento {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	@JsonFormat(pattern = "dd/MM/yyyy")
+	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
 	private LocalDateTime dataConsulta;
 
 	private Boolean ativo = true;
@@ -116,7 +116,7 @@ public class Agendamento {
 		if (agendamento.description() != null) {
 			this.description = agendamento.description();
 		}
-		if (agendamento.dataConsulta() != null && agendamento.dataConsulta().isAfter(LocalDateTime.now())) {
+		if (agendamento.dataConsulta() != null && agendamento.dataConsulta().isAfter(LocalDateTime.now().plusHours(2))) {
 			this.dataConsulta = agendamento.dataConsulta();
 		}
 	}
