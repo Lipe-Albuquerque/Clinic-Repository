@@ -1,11 +1,11 @@
-package br.com.senior.clinic.paciente;
+package br.com.senior.clinic.patient;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.validator.constraints.br.CPF;
 
-import br.com.senior.clinic.agendamento.Agendamento;
+import br.com.senior.clinic.scheduling.Scheduling;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,7 +19,7 @@ import lombok.Setter;
 @Data
 @Getter
 @Setter
-public class Paciente {
+public class Patient {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,24 +29,24 @@ public class Paciente {
 	@CPF
 	private String cpf;
 	@OneToMany(mappedBy = "patient")
-	private List<Agendamento> listAgendamento = new ArrayList<>();
+	private List<Scheduling> listAgendamento = new ArrayList<>();
 
-	public Paciente() {
+	public Patient() {
 
 	}
 
-	public Paciente(PacienteAdd paciente) {
+	public Patient(PatientAdd paciente) {
 		this.id = paciente.id();
 		this.name = paciente.name();
 		this.cpf = paciente.cpf();
 	}
 
-	public Paciente(PacienteList paciente) {
+	public Patient(PatientList paciente) {
 		this.id = paciente.id();
 		this.name = paciente.name();
 	}
 
-	public Paciente(Paciente obj) {
+	public Patient(Patient obj) {
 		this.id = obj.id;
 		this.name = obj.name;
 		this.cpf = obj.cpf;
@@ -85,15 +85,15 @@ public class Paciente {
 		this.cpf = cpf;
 	}
 
-	public List<Agendamento> getListAgendamento() {
+	public List<Scheduling> getListAgendamento() {
 		return listAgendamento;
 	}
 
-	public void setListAgendamento(List<Agendamento> listAgendamento) {
+	public void setListAgendamento(List<Scheduling> listAgendamento) {
 		this.listAgendamento = listAgendamento;
 	}
 
-	public void atualizarDados(PacienteEdit paciente) {
+	public void atualizarDados(PatientEdit paciente) {
 
 		if (paciente.name() != null) {
 			this.name = paciente.name();
@@ -111,7 +111,7 @@ public class Paciente {
 
 	}
 
-	public void addAgendamento(Agendamento agendamento) {
+	public void addAgendamento(Scheduling agendamento) {
 		this.listAgendamento.add(agendamento);
 	}
 

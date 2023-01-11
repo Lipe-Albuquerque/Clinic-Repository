@@ -1,16 +1,15 @@
 {
 	"info": {
-		"_postman_id": "f2195dcc-fc9e-4e1f-a229-ac5fc57482ed",
+		"_postman_id": "cc0dad28-851c-483f-ae83-745ef5f87cfa",
 		"name": "New Collection",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "23249775"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "aagendamentos",
+			"name": "scheduling",
 			"item": [
 				{
-					"name": "Edit Agendamento",
+					"name": "Edit scheduling",
 					"request": {
 						"method": "PUT",
 						"header": [],
@@ -24,13 +23,13 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/agendamento/2",
+							"raw": "localhost:8080/scheduling/2",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"agendamento",
+								"scheduling",
 								"2"
 							]
 						}
@@ -38,13 +37,13 @@
 					"response": []
 				},
 				{
-					"name": "Post Agendamento",
+					"name": "Post scheduling",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n\"doctor\" : 7,\r\n\"patient\": 1,\r\n\"dataConsulta\" : \"04/02/2023\",\r\n\"description\" : \"consulta de teste\"\r\n}",
+							"raw": "{\r\n\"doctor\" : 1,\r\n\"patient\": 1,\r\n\"dataConsulta\" : \"11/01/2023 16:30\",\r\n\"description\" : \"consulta de teste\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -52,75 +51,76 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/agendamento",
+							"raw": "localhost:8080/scheduling",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"agendamento"
+								"scheduling"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "GET ativos agendamentos",
+					"name": "GET ativos scheduling",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/agendamento",
+							"raw": "localhost:8080/scheduling",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"agendamento"
+								"scheduling"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "GET desativados agendamentos",
+					"name": "GET desativados scheduling",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/agendamento",
+							"raw": "localhost:8080/scheduling/finalized",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"agendamento"
+								"scheduling",
+								"finalized"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "get id agendamento",
+					"name": "get id scheduling",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/agendamento/2",
+							"raw": "localhost:8080/scheduling/1",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"agendamento",
-								"2"
+								"scheduling",
+								"1"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "delete agendamento",
+					"name": "delete scheduling",
 					"request": {
 						"method": "DELETE",
 						"header": [],
@@ -129,14 +129,14 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "localhost:8080/agendamento/2",
+							"raw": "localhost:8080/scheduling/1",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"agendamento",
-								"2"
+								"scheduling",
+								"1"
 							]
 						}
 					},
@@ -165,14 +165,13 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/patient/8",
+							"raw": "localhost:8080/patient",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"patient",
-								"8"
+								"patient"
 							]
 						}
 					},
@@ -196,22 +195,22 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/patient/agendamento/2",
+							"raw": "localhost:8080/patient/scheduling/1",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
 								"patient",
-								"agendamento",
-								"2"
+								"scheduling",
+								"1"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "localhost:8080/patient Copy",
+					"name": "post patients",
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -252,21 +251,21 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/patient/3",
+							"raw": "localhost:8080/patient/1",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
 								"patient",
-								"3"
+								"1"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "get agendamentos finalizados de patients",
+					"name": "get scheduling finalized patients",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -283,15 +282,16 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/patient/agendamento/8",
+							"raw": "localhost:8080/patient/scheduling/finalized/1",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
 								"patient",
-								"agendamento",
-								"8"
+								"scheduling",
+								"finalized",
+								"1"
 							]
 						}
 					},
@@ -326,7 +326,7 @@
 					"response": []
 				},
 				{
-					"name": "ativar patient",
+					"name": "active patient",
 					"request": {
 						"method": "PUT",
 						"header": [],
@@ -340,14 +340,14 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/patient/ativar/8",
+							"raw": "localhost:8080/patient/active/8",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
 								"patient",
-								"ativar",
+								"active",
 								"8"
 							]
 						}
@@ -360,7 +360,7 @@
 			"name": "doctor",
 			"item": [
 				{
-					"name": "localhost:8080/doctor",
+					"name": "post doctor",
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -387,7 +387,7 @@
 					"response": []
 				},
 				{
-					"name": "get doctor agendamentos",
+					"name": "get doctor scheduling",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -404,14 +404,14 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/doctor/agendamento/5",
+							"raw": "localhost:8080/doctor/scheduling/5",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
 								"doctor",
-								"agendamento",
+								"scheduling",
 								"5"
 							]
 						}
@@ -505,7 +505,7 @@
 					"response": []
 				},
 				{
-					"name": "ativar doctor",
+					"name": "active doctor",
 					"request": {
 						"method": "PUT",
 						"header": [],
@@ -519,14 +519,14 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/doctor/ativar/5",
+							"raw": "localhost:8080/doctor/active/5",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
 								"doctor",
-								"ativar",
+								"active",
 								"5"
 							]
 						}
@@ -534,7 +534,7 @@
 					"response": []
 				},
 				{
-					"name": "get doctor agendamentos FINALIZADOS",
+					"name": "get doctor scheduling finalized",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -551,14 +551,15 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/doctor/agendamento/5",
+							"raw": "localhost:8080/doctor/scheduling/finalized/5",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
 								"doctor",
-								"agendamento",
+								"scheduling",
+								"finalized",
 								"5"
 							]
 						}

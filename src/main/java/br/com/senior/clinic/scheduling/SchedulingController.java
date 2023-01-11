@@ -1,4 +1,4 @@
-package br.com.senior.clinic.agendamento;
+package br.com.senior.clinic.scheduling;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -15,38 +15,38 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.transaction.Transactional;
 
-@RequestMapping("agendamento")
+@RequestMapping("scheduling")
 @RestController
-public class AgendamentoController {
+public class SchedulingController {
 
 	@Autowired
-	private AgendamentoService agendamentoService;
+	private SchedulingService agendamentoService;
 
 	@GetMapping("/{id}")
-	public AgendamentoDados findById(@PathVariable Integer id) {
+	public SchedulingDados findById(@PathVariable Integer id) {
 		return agendamentoService.findById(id);
 	}
 
 	@GetMapping
 	@Transactional
-	public Page<AgendamentoList> listAll(@PageableDefault(size = 10, sort = { "id" }) Pageable paginacao) {
+	public Page<SchedulingList> listAll(@PageableDefault(size = 10, sort = { "id" }) Pageable paginacao) {
 		return agendamentoService.listAllAtivo(paginacao);
 	}
 
-	@GetMapping("/finalizados")
-	public Page<AgendamentoList> listAllFinalizados(@PageableDefault(size = 10, sort = { "id" }) Pageable paginacao) {
+	@GetMapping("/finalized")
+	public Page<SchedulingList> listAllFinalizados(@PageableDefault(size = 10, sort = { "id" }) Pageable paginacao) {
 		return agendamentoService.listAllDesativados(paginacao);
 	}
 
 	@PostMapping
 	@Transactional
-	public void add(@RequestBody AgendamentoAdd agendamento) {
+	public void add(@RequestBody SchedulingAdd agendamento) {
 		agendamentoService.add(agendamento);
 	}
 
 	@PutMapping("/{id}")
 	@Transactional
-	public void edit(@PathVariable Integer id, @RequestBody AgendamentoEdit agendamento) {
+	public void edit(@PathVariable Integer id, @RequestBody SchedulingEdit agendamento) {
 		agendamentoService.edit(id, agendamento);
 	}
 	

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.senior.clinic.agendamento.AgendamentoList;
+import br.com.senior.clinic.scheduling.SchedulingList;
 import jakarta.transaction.Transactional;
 
 @RestController
@@ -33,7 +33,7 @@ public class DoctorController {
 		return doctorService.findAllByAtivoTrue(paginacao);
 	}
 
-	@GetMapping("/desativados")
+	@GetMapping("/finalized")
 	public Page<DoctorList> findAllByAtivoFalse(@PageableDefault(size = 10, sort = { "name" }) Pageable paginacao) {
 		return doctorService.findAllByAtivoFalse(paginacao);
 	}
@@ -56,19 +56,19 @@ public class DoctorController {
 		doctorService.delete(id);
 	}
 
-	@GetMapping("/agendamento/{id}")
-	public Page<AgendamentoList> listAgendamentoAgendamentoAberto(@PathVariable Integer id,
+	@GetMapping("/scheduling/{id}")
+	public Page<SchedulingList> listAgendamentoAgendamentoAberto(@PathVariable Integer id,
 			@PageableDefault(size = 10) Pageable paginacao) {
 		return doctorService.listarAgendamentoAberto(paginacao, id);
 	}
 
-	@GetMapping("/agendamento/finalizado/{id}")
-	public Page<AgendamentoList> listAgendamentosAgendamentoFechado(@PathVariable Integer id,
+	@GetMapping("/scheduling/finalized/{id}")
+	public Page<SchedulingList> listAgendamentosAgendamentoFechado(@PathVariable Integer id,
 			@PageableDefault(size = 10) Pageable paginacao) {
 		return doctorService.listarAgendamentoFechado(paginacao, id);
 	}
 
-	@PutMapping("ativar/{id}")
+	@PutMapping("active/{id}")
 	@Transactional
 	public void ativarPatient(@PathVariable Integer id) {
 		doctorService.ativarDoctor(id);

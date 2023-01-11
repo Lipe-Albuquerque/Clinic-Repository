@@ -1,4 +1,4 @@
-package br.com.senior.clinic.agendamento;
+package br.com.senior.clinic.scheduling;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -10,28 +10,28 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import br.com.senior.clinic.doctor.DoctorRepository;
-import br.com.senior.clinic.paciente.PacienteRepository;
+import br.com.senior.clinic.patient.PatientRepository;
 
 @Service
-public class AgendamentoService {
+public class SchedulingService {
 
 	@Autowired
-	private AgendamentoRepository agendamentoRepository;
+	private SchedulingRepository agendamentoRepository;
 
 	@Autowired
 	private DoctorRepository doctorRepository;
 
 	@Autowired
-	private PacienteRepository patientRepository;
+	private PatientRepository patientRepository;
 
-	public AgendamentoDados findById(Integer id) {
+	public SchedulingDados findById(Integer id) {
 		atualizarAgendamentosVencidos();
-		Optional<Agendamento> agendamento = agendamentoRepository.findById(id);
-		AgendamentoDados agendamentoDados = new AgendamentoDados(agendamento);
+		Optional<Scheduling> agendamento = agendamentoRepository.findById(id);
+		SchedulingDados agendamentoDados = new SchedulingDados(agendamento);
 		return agendamentoDados;
 	}
 
-	public Page<AgendamentoList> listAllAtivo(Pageable paginacao) {
+	public Page<SchedulingList> listAllAtivo(Pageable paginacao) {
 		atualizarAgendamentosVencidos();
 		return agendamentoRepository.findAllByAtivoTrue(paginacao);
 	}
@@ -40,43 +40,43 @@ public class AgendamentoService {
 
 		agendamentoRepository.findAllByAtivoTrue().stream()
 				.filter(obj -> obj.getDataConsulta().isBefore(LocalDateTime.now().plusHours(1)))
-				.forEach(obj -> obj.setDescricao(obj.getDescricao() + "/ AGENDAMENTO CONCLUIDO"));
+				.forEach(obj -> obj.setDescricao(obj.getDescricao() + "/ SCHEDULE COMPLETED"));
 		;
 		agendamentoRepository.findAllByAtivoTrue().stream()
 				.filter(obj -> obj.getDataConsulta().isBefore(LocalDateTime.now().plusHours(1))).forEach(obj -> obj.delete());
 		;
 	}
 
-	public Page<AgendamentoList> listAllDesativados(Pageable paginacao) {
+	public Page<SchedulingList> listAllDesativados(Pageable paginacao) {
 		return agendamentoRepository.findAllByAtivoFalse(paginacao);
 	}
 
-	public void add(AgendamentoAdd agendamento) {
+	public void add(SchedulingAdd agendamento) {
 		if (agendamento.dataConsulta().isBefore(LocalDateTime.now().plusHours(1))) {
 			throw new IllegalArgumentException(
-					"SUA CONSULTA DEVE SER MARCADA COM PELO MENOS UMA HORA DE ANTECEDENCIA, FAVOR CORRIGIR A DATA INSERIDA, ");
+					"YOUR APPOINTMENT MUST BE BOOKED AT LEAST ONE HOUR IN ADVANCE, PLEASE CORRECT THE INSERTED DATE, ");
 		}
 		if (doctorRepository.getReferenceById(agendamento.doctor()) == null) {
-			throw new IllegalArgumentException("FAVOR INFORMAR UM MEDICO VALIDO PARA CONSULTA, ");
+			throw new IllegalArgumentException("PLEASE INFORM A VALID DOCTOR FOR CONSULTATION, ");
 		}
-		List<Agendamento> listTemp = doctorRepository.getReferenceById(agendamento.doctor()).getListAgendamentos();
+		List<Scheduling> listTemp = doctorRepository.getReferenceById(agendamento.doctor()).getListAgendamentos();
 
 		for (int count = 0; count < listTemp.size(); count++) {
 
 			if (listTemp.get(count).getDataConsulta().equals(agendamento.dataConsulta())) {
 				throw new IllegalArgumentException(
-						"MEDICO OCUPADO NESTA DATA, FAVOR INFORMAR UMA DATA VALIDO PARA CONSULTA, ");
+						"DOCTOR OCCUPIED ON THIS DATE, PLEASE INFORM A VALID DATE FOR CONSULTATION, ");
 			}
 
 		}
 
 		if (patientRepository.getReferenceById(agendamento.patient()) == null) {
-			throw new IllegalArgumentException("FAVOR INFORMAR UM PACIENTE VALIDO PARA CONSULTA, ");
+			throw new IllegalArgumentException("PLEASE INFORM A VALID PATIENT FOR CONSULTATION, ");
 		}
 		if (agendamento.description().isBlank()) {
-			throw new IllegalArgumentException("FAVOR INFORMAR A DESCRIÇÃO DO AGENDAMENTO, ");
+			throw new IllegalArgumentException("PLEASE INFORM THE DESCRIPTION OF THE SCHEDULE, ");
 		}
-		Agendamento agendamentoNew = new Agendamento(agendamento.description(), agendamento.dataConsulta());
+		Scheduling agendamentoNew = new Scheduling(agendamento.description(), agendamento.dataConsulta());
 
 		agendamentoNew.setDoctor(doctorRepository.getReferenceById(agendamento.doctor()));
 		doctorRepository.getReferenceById(agendamentoNew.getDoctor().getId()).addAgendamento(agendamentoNew);
@@ -87,7 +87,7 @@ public class AgendamentoService {
 		agendamentoRepository.save(agendamentoNew);
 	}
 
-	public void edit(Integer id, AgendamentoEdit agendamento) {
+	public void edit(Integer id, SchedulingEdit agendamento) {
 		if (agendamentoRepository.findById(id) != null) {
 			agendamentoRepository.getReferenceById(id).edit(agendamento);
 
@@ -95,11 +95,11 @@ public class AgendamentoService {
 				agendamentoRepository.getReferenceById(id)
 						.setDoctor(doctorRepository.getReferenceById(agendamento.doctor_id()));
 			} else {
-				throw new IllegalArgumentException("DOCTOR DONT ExIST");
+				throw new IllegalArgumentException("doctor does not exist");
 			}
 
 		} else {
-			throw new IllegalArgumentException("AGENDAMENTO DONT ExIST");
+			throw new IllegalArgumentException("schedule does not exist");
 		}
 
 	}
@@ -107,7 +107,10 @@ public class AgendamentoService {
 	public void delete(Integer id) {
 
 		if (agendamentoRepository.findById(id) == null) {
-			throw new IllegalArgumentException("Agendamento dont exist!");
+			throw new IllegalArgumentException("schedule does not exist!");
+		}
+		if(agendamentoRepository.findById(id).get().getAtivo() == false) {
+			throw new IllegalArgumentException("Appointment already cancelled/finalized!");
 		}
 		agendamentoRepository.getReferenceById(id).delete();
 

@@ -1,4 +1,4 @@
-package br.com.senior.clinic.paciente;
+package br.com.senior.clinic.patient;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -13,41 +13,41 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.senior.clinic.agendamento.AgendamentoList;
+import br.com.senior.clinic.scheduling.SchedulingList;
 import jakarta.transaction.Transactional;
 
 @RestController
 @RequestMapping("patient")
-public class PacienteController {
+public class PatientController {
 
 	@Autowired
-	private PacienteService pacienteService;
+	private PatientService pacienteService;
 	
 	@GetMapping("/{id}")
-	public PacienteDados findById(@PathVariable Integer id) {
+	public PatientDados findById(@PathVariable Integer id) {
 		return pacienteService.findById(id);
 	}
 
 	@PostMapping
 	@Transactional
-	public Paciente adicionarPaciente(@RequestBody PacienteAdd paciente) {
+	public Patient adicionarPaciente(@RequestBody PatientAdd paciente) {
 		return pacienteService.add(paciente);
 	}
 
 	@GetMapping
-	public Page<PacienteList> listarPacientes(@PageableDefault(size = 10, sort = { "name" }) Pageable paginacao) {
+	public Page<PatientList> listarPacientes(@PageableDefault(size = 10, sort = { "name" }) Pageable paginacao) {
 		return pacienteService.listar(paginacao);
 	}
 	
 	@GetMapping("/desativados")
-	public Page<PacienteList> listarPacientesDesativados(@PageableDefault(size = 10, sort = { "name" }) Pageable paginacao) {
+	public Page<PatientList> listarPacientesDesativados(@PageableDefault(size = 10, sort = { "name" }) Pageable paginacao) {
 		return pacienteService.listarDesativados(paginacao);
 	}
 
 
 	@PutMapping("/{id}")
 	@Transactional
-	public void editarPaciente(@PathVariable Integer id ,@RequestBody PacienteEdit paciente) {
+	public void editarPaciente(@PathVariable Integer id ,@RequestBody PatientEdit paciente) {
 		pacienteService.edit(id,paciente);
 	}
 
@@ -57,17 +57,17 @@ public class PacienteController {
 		pacienteService.delete(id);
 	}
 	
-	@GetMapping("/agendamento/{id}")
-	public Page<AgendamentoList> listAgendamentosPatientAberto(@PathVariable Integer id, @PageableDefault(size = 10) Pageable paginacao){
+	@GetMapping("/scheduling/{id}")
+	public Page<SchedulingList> listAgendamentosPatientAberto(@PathVariable Integer id, @PageableDefault(size = 10) Pageable paginacao){
 		return pacienteService.listarAgendamentoAberto(paginacao,id);
 	}
 	
-	@GetMapping("/agendamento/finalizado/{id}")
-	public Page<AgendamentoList> listAgendamentosPatientFechado(@PathVariable Integer id, @PageableDefault(size = 10) Pageable paginacao){
+	@GetMapping("/scheduling/finalized/{id}")
+	public Page<SchedulingList> listAgendamentosPatientFechado(@PathVariable Integer id, @PageableDefault(size = 10) Pageable paginacao){
 		return pacienteService.listarAgendamentoFechado(paginacao,id);
 	}
 	
-	@PutMapping("ativar/{id}")
+	@PutMapping("active/{id}")
 	@Transactional
 	public void ativarPatient(@PathVariable Integer id) {
 		pacienteService.ativarPatient(id);

@@ -1,11 +1,11 @@
-package br.com.senior.clinic.agendamento;
+package br.com.senior.clinic.scheduling;
 
 import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import br.com.senior.clinic.doctor.Doctor;
-import br.com.senior.clinic.paciente.Paciente;
+import br.com.senior.clinic.patient.Patient;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -14,7 +14,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 @Entity
-public class Agendamento {
+public class Scheduling {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,15 +30,15 @@ public class Agendamento {
 	private Doctor doctor;
 	@ManyToOne
 	@JoinColumn(name = "patient_id")
-	private Paciente patient;
+	private Patient patient;
 
 	private String description;
 
-	public Agendamento() {
+	public Scheduling() {
 		super();
 	}
 
-	public Agendamento(Integer id, LocalDateTime dataConsulta, Doctor doctor, Paciente paciente, String descricao) {
+	public Scheduling(Integer id, LocalDateTime dataConsulta, Doctor doctor, Patient paciente, String descricao) {
 		super();
 		this.id = id;
 		this.dataConsulta = dataConsulta;
@@ -47,13 +47,13 @@ public class Agendamento {
 		this.description = descricao;
 	}
 
-	public Agendamento(AgendamentoAdd obj) {
+	public Scheduling(SchedulingAdd obj) {
 		this.id = obj.id();
 		this.description = obj.description();
 		this.dataConsulta = obj.dataConsulta();
 	}
 
-	public Agendamento(String description2, LocalDateTime dataConsulta2) {
+	public Scheduling(String description2, LocalDateTime dataConsulta2) {
 		this.description = description2;
 		this.dataConsulta = dataConsulta2;
 	}
@@ -95,11 +95,11 @@ public class Agendamento {
 		this.doctor = doctor;
 	}
 
-	public Paciente getPaciente() {
+	public Patient getPaciente() {
 		return patient;
 	}
 
-	public void setPaciente(Paciente paciente) {
+	public void setPaciente(Patient paciente) {
 		this.patient = paciente;
 	}
 
@@ -111,7 +111,7 @@ public class Agendamento {
 		this.description = descricao;
 	}
 
-	public void edit(AgendamentoEdit agendamento) {
+	public void edit(SchedulingEdit agendamento) {
 
 		if (agendamento.description() != null) {
 			this.description = agendamento.description();

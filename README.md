@@ -4,12 +4,12 @@ To use the program, simply register, informing common data such as name, CPF (fo
 
 
 ## Project Versioning 🧩
-### Technologies : ![Git](https://img.shields.io/badge/-Git-black?style=flat&logo=git)&nbsp; ![GitHub](https://img.shields.io/badge/-GitHub-black?style=flat&logo=github)&nbsp;
+### Technologies : ![Git](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)&nbsp; ![GitLab](https://img.shields.io/badge/GitLab-330F63?style=for-the-badge&logo=gitlab&logoColor=white)&nbsp;
 
 <br>
 <br>
 <br>
-
+ 
 
 The packages were structured following the MVC (Model, View and Controller) Standard. We created and deployed a REST (REpresentational State Transfer) API using SpringBoot and MySQL, applying JPA (Java Persistence API) and Hibernate (an object/relational mapping tool for Java environments).
 
@@ -39,34 +39,30 @@ The REST layer -  where we implemented our business logic - and the service laye
     - In the "Environment Variables" screen that will open, click the "New" button just below the part of the screen that says "environment Variables".
     - In the variable name and value fields, fill in: ``MAVEN_HOME`` and ``C:\maven\bin``, respectively. Press "Confirm" button.
     - Check if it worked by opening a new prompt and typing ``mvn -version``. If it worked, an error will appears.
-4. To install Spring Tools Suite
-    - Download Spring Tools Suite [here](https://spring.io/tools)
-    - Double click on the downloaded file to unzip.
-    - Wait for unpacking.
-    - A folder called ``sts-x.xx.x.RELEASE`` will be created in the unzip location.
-    - Move the folder to a location of your choice.
-    -Select the ``SpringToolSuite4`` application from inside the folder and create a shortcut on the desktop for easy access.
+4. To install Eclipse
+    - Download Spring Tools Suite [here](https://www.eclipse.org/downloads/)
 5. Make a project copy to your machine:
-
-     `git clone https://github.com/Lipe-Albuquerque/Clinic-Repository.git`
-6. Import the project into your Spring Tools Suite.
-    - File -> Import -> Maven -> Existing Maven Projects -> Next -> Browse -> Select Downloaded Project -> Finish
+      first:
+     `git clone git@git.senior.com.br:treinamento/go-dev-2023-spring.git`
+      after cloning repository, alter for my branch:
+     `git pull origin filipe-albuquerque`
+6. Import the project into your Eclipse.
+    - File -> Import -> Maven -> Existing Maven Projects -> Next -> Browse -> Select Past of Project -> Finish
 7. A change to the application.properties file is required.
     - It is necessary to define your bank address, username and password.
     - The file will look like this:
     ```` 
-    spring.datasource.url=jdbc:mysql://localhost:3306/clinic
-    spring.datasource.username=root
+    spring.datasource.url=jdbc:postgresql://localhost:5432/clinic
+    spring.datasource.username=postgres
     spring.datasource.password=root
     ````
 
-## **MySql**
+## **Postgres**
 >  To run the project, a database called `clinic` should be created. Spring is responsible for creating the tables.
 
-1.  To create the database, open MySql Workbench. If you don't have it, install [here.](https://dev.mysql.com/downloads/workbench/)
-2.  To create a schema, find a button with the database icon.
-3.  Enter the bank name in the ``clinic``` case. Pay attention to the spelling, otherwise, Spring won't recognize the new schema.
-4.  Finally click apply.
+1.  To create the database, open postgres. If you don't have it, install [here.](https://www.postgresql.org/download/)
+2.  To create a schema.
+3.  Create a schema ``clinic``. if you type wrong spring will not recognize the database.
 
 <br>
 
@@ -74,6 +70,9 @@ The REST layer -  where we implemented our business logic - and the service laye
 > Postman was the software we choose to test the application requests. It can be accessed on the browser or be downloaded [here.](https://www.postman.com/downloads/).
 
 [here](https://github.com/Lipe-Albuquerque/Clinic-Repository/tree/master/requestsClinic)´postman requests.
+
+to import the postman requests, come:
+import -> upload -> select the `requestsClinic` file that is in the `requestsClinic` folder in the project.
 
 
 <table align="center">
@@ -84,10 +83,9 @@ The REST layer -  where we implemented our business logic - and the service laye
         <img src="https://avatars.githubusercontent.com/u/98127981?s=400&u=ef1069ab56dbce000d7bbd088b4bfa14910750dd&v=4"
      alt="Filipe Albuquerque" width="250px;" height="250px"/>
       <br />
-      <a href="https://github.com/oliota">Rubem Oliota</a>
+      <a href="https://github.com/Lipe-Albuquerque">Filipe Albuquerque</a>
     </td>     
    </tr>
  </table>
  <br>
  <br>
-

@@ -2,7 +2,7 @@ package br.com.senior.clinic.doctor;
 
 import java.util.List;
 
-import br.com.senior.clinic.agendamento.Agendamento;
+import br.com.senior.clinic.scheduling.Scheduling;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -17,9 +17,9 @@ public class Doctor {
 	private Boolean ativo = true;
 	private String crm;
 	@OneToMany(mappedBy = "doctor")
-	private List<Agendamento> listAgendamentos;
+	private List<Scheduling> listAgendamentos;
 	 
-	public Doctor(Integer id, String name ,String crm, List<Agendamento> listAgendamentos) {
+	public Doctor(Integer id, String name ,String crm, List<Scheduling> listAgendamentos) {
 		super();
 		this.id = id;
 		this.name = name; 
@@ -68,11 +68,11 @@ public class Doctor {
 		this.crm = crm;
 	}
 
-	public List<Agendamento> getListAgendamentos() {
+	public List<Scheduling> getListAgendamentos() {
 		return listAgendamentos;
 	}
 
-	public void setListAgendamentos(List<Agendamento> listAgendamentos) {
+	public void setListAgendamentos(List<Scheduling> listAgendamentos) {
 		this.listAgendamentos = listAgendamentos;
 	}
 
@@ -88,7 +88,7 @@ public class Doctor {
 		this.ativo = false;
 	}
 	
-	public void addAgendamento(Agendamento agendamento) {
+	public void addAgendamento(Scheduling agendamento) {
 		this.listAgendamentos.add(agendamento);
 	}
 

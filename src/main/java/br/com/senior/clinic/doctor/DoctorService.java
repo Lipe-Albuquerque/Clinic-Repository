@@ -7,8 +7,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import br.com.senior.clinic.agendamento.AgendamentoList;
-import br.com.senior.clinic.agendamento.AgendamentoRepository;
+import br.com.senior.clinic.scheduling.SchedulingList;
+import br.com.senior.clinic.scheduling.SchedulingRepository;
 
 @Service
 public class DoctorService {
@@ -17,7 +17,7 @@ public class DoctorService {
 	private DoctorRepository doctorRepository;
 
 	@Autowired
-	private AgendamentoRepository agendamentoRepository;
+	private SchedulingRepository agendamentoRepository;
 
 	public DoctorDados findById(Integer id) {
 		Optional<Doctor> doctor = doctorRepository.findById(id);
@@ -43,7 +43,7 @@ public class DoctorService {
 
 	public void edit(Integer id, doctorEdit doctor) {
 		if (doctorRepository.getReferenceById(id) == null) {
-			throw new IllegalArgumentException("Doctor dont exist!");
+			throw new IllegalArgumentException("doctor does not exist!");
 		}
 		Doctor doctorEdit = doctorRepository.getReferenceById(id);
 		doctorEdit.atualizarDados(doctor);
@@ -51,21 +51,22 @@ public class DoctorService {
 
 	public void delete(Integer id) {
 		if (doctorRepository.findById(id) == null) {
-			throw new IllegalArgumentException("Doctor dont exist!");
+			throw new IllegalArgumentException("doctor does not exist!");
 		}
 		if (!agendamentoRepository.findByDoctorIdAndAtivoTrue(id).isEmpty()) {
-			throw new IllegalArgumentException("doctor cannot	 be deleted, as he has active appointments");
+			throw new IllegalArgumentException("doctor cannot be deleted, as he has active appointments");
 		}
 		doctorRepository.getReferenceById(id).delete();
 	}
 
-	public Page<AgendamentoList> listarAgendamentoAberto(Pageable paginacao, Integer id) {
+	public Page<SchedulingList> listarAgendamentoAberto(Pageable paginacao, Integer id) {
 
 		return agendamentoRepository.findAllByDoctorIdAndAtivoTrue(paginacao, id);
 
 	}
 
-	public Page<AgendamentoList> listarAgendamentoFechado(Pageable paginacao, Integer id) {
+	public Page<SchedulingList> listarAgendamentoFechado(Pageable paginacao, Integer id) {
+		
 		return agendamentoRepository.findAllByDoctorIdAndAtivoFalse(paginacao, id);
 
 	}
