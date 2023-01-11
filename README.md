@@ -73,7 +73,7 @@ The REST layer -  where we implemented our business logic - and the service laye
 ## **Testing the requests**
 > Postman was the software we choose to test the application requests. It can be accessed on the browser or be downloaded [here.](https://www.postman.com/downloads/).
 
-[here]t(https://github.com/Lipe-Albuquerque/Clinic-Repository/requestsClinic)´postman requests.
+[here](https://github.com/Lipe-Albuquerque/Clinic-Repository/tree/master/requestsClinic)´postman requests.
 
 
 <table align="center">
