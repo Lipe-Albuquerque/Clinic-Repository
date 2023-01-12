@@ -60,6 +60,8 @@ class SchedulingServiceTest extends Mockito {
 	private DoctorDados doctorDados;
 
 	private PatientDados patientDados;
+	
+	private SchedulingEdit schedulingEdit;
 
 	private Doctor doctor;
 
@@ -80,7 +82,7 @@ class SchedulingServiceTest extends Mockito {
 
 	@Test
 	void DeveriaRetornarUmAgendamentoDados() {
-		when(repository.findById(anyInt())).thenReturn(schedulingOptional);
+		when(repository.findById(1)).thenReturn(schedulingOptional);
 		SchedulingDados response = service.findById(scheduling.getId());
 		assertEquals(SchedulingDados.class, response.getClass());
 	}
@@ -107,6 +109,17 @@ class SchedulingServiceTest extends Mockito {
 
 	}
 
+	@Test
+	void DeveriaAtualizarADataDoAgendamento() {
+		SchedulingEdit schedulingEntidade = new SchedulingEdit("deubom", null, null);
+		
+		when(repository.findById(1)).thenReturn(schedulingOptional);
+//		when(repository.getReferenceById(id).edit(schedulingEntidade));
+		
+		service.edit(1, schedulingEntidade);
+		assertEquals(schedulingEntidade.description(), schedulingOptional.get().getDescricao());
+		
+	}
 
 	private void startScheduling() {
 
@@ -128,6 +141,8 @@ class SchedulingServiceTest extends Mockito {
 
 		schedulingOptional = Optional.of(new Scheduling(id, plusDays, doctor, patient, descricao, active));
 
+		schedulingEdit = new SchedulingEdit(descricao, LocalDateTime.of(2023, 10, 20, 10, 20), 1) ;
+		
 		list.add(scheduling);
 		
 		list.add(schedulingVencido);
