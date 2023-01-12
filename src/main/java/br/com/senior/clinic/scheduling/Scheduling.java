@@ -46,6 +46,17 @@ public class Scheduling {
 		this.patient = paciente;
 		this.description = descricao;
 	}
+	
+	public Scheduling(Integer id, LocalDateTime dataConsulta, Doctor doctor, Patient paciente, String descricao, Boolean active) {
+		super();
+		this.id = id;
+		this.dataConsulta = dataConsulta;
+		this.doctor = doctor;
+		this.patient = paciente;
+		this.description = descricao;
+		this.ativo = active;
+	}
+
 
 	public Scheduling(SchedulingAdd obj) {
 		this.id = obj.id();

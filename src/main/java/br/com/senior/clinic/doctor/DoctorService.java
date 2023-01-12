@@ -18,6 +18,13 @@ public class DoctorService {
 
 	@Autowired
 	private SchedulingRepository agendamentoRepository;
+	
+	@Autowired
+	public DoctorService(DoctorRepository doctorRepository, SchedulingRepository agendamentoRepository) {
+		super();
+		this.doctorRepository = doctorRepository;
+		this.agendamentoRepository = agendamentoRepository;
+	}
 
 	public DoctorDados findById(Integer id) {
 		Optional<Doctor> doctor = doctorRepository.findById(id);
@@ -66,7 +73,7 @@ public class DoctorService {
 	}
 
 	public Page<SchedulingList> listarAgendamentoFechado(Pageable paginacao, Integer id) {
-		
+
 		return agendamentoRepository.findAllByDoctorIdAndAtivoFalse(paginacao, id);
 
 	}
@@ -76,7 +83,7 @@ public class DoctorService {
 		if (doctorRepository.findByIdAndAtivoFalse(id) != null) {
 			doctorRepository.findByIdAndAtivoFalse(id).ativar();
 		} else {
-			throw new IllegalArgumentException("DOCTOR DONT EXIST OR ALREADY ACTIVO");
+			throw new IllegalArgumentException("DOCTOR DOES NOT EXIST OR IS ALREADY ACTIVO");
 		}
 
 	}

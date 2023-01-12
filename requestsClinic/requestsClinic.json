@@ -10,12 +10,15 @@
 			"item": [
 				{
 					"name": "Edit scheduling",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
-						"method": "PUT",
+						"method": "GET",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n\"doctor_id\" : 1,\r\n\"dataConsulta\" : \"20/01/2023\",\r\n\"description\" : \"consulta de vista\"\r\n}",
+							"raw": "{\r\n\"doctor_id\" : 1,\r\n\"dataConsulta\" : \"20/01/2023 12:20\",\r\n\"description\" : \"consulta de vista\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -23,14 +26,14 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/scheduling/2",
+							"raw": "localhost:8080/scheduling/1",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
 								"scheduling",
-								"2"
+								"1"
 							]
 						}
 					},
@@ -43,7 +46,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n\"doctor\" : 1,\r\n\"patient\": 1,\r\n\"dataConsulta\" : \"11/01/2023 16:30\",\r\n\"description\" : \"consulta de teste\"\r\n}",
+							"raw": "{\r\n\"doctor\" : 1,\r\n\"patient\": 1,\r\n\"dataConsulta\" : \"12/01/2023 16:30\",\r\n\"description\" : \"consulta de teste\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -216,7 +219,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Debora\",\r\n    \"cpf\":\"075.491.584-01\"\r\n}",
+							"raw": "{\r\n    \"name\": \"Debora\",\r\n    \"cpf\":\"710.311.390-44\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -251,14 +254,14 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/patient/1",
+							"raw": "localhost:8080/patient/2",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
 								"patient",
-								"1"
+								"2"
 							]
 						}
 					},
@@ -312,14 +315,14 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/patient/8",
+							"raw": "localhost:8080/patient/2",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
 								"patient",
-								"8"
+								"2"
 							]
 						}
 					},
@@ -340,7 +343,7 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/patient/active/8",
+							"raw": "localhost:8080/patient/active/2",
 							"host": [
 								"localhost"
 							],
@@ -348,7 +351,38 @@
 							"path": [
 								"patient",
 								"active",
-								"8"
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get patient off",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/patient/finalized",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"patient",
+								"finalized"
 							]
 						}
 					},
@@ -404,7 +438,7 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/doctor/scheduling/5",
+							"raw": "localhost:8080/doctor/scheduling/1",
 							"host": [
 								"localhost"
 							],
@@ -412,7 +446,7 @@
 							"path": [
 								"doctor",
 								"scheduling",
-								"5"
+								"1"
 							]
 						}
 					},
@@ -433,14 +467,14 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/doctor/8",
+							"raw": "localhost:8080/doctor/2",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
 								"doctor",
-								"8"
+								"2"
 							]
 						}
 					},
@@ -561,6 +595,37 @@
 								"scheduling",
 								"finalized",
 								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get doctors off",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Filipe\",\r\n    \"crm\" : \"56485sc\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/doctor/finalized",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"doctor",
+								"finalized"
 							]
 						}
 					},

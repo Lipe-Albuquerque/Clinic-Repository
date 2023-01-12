@@ -19,6 +19,15 @@ public class Doctor {
 	@OneToMany(mappedBy = "doctor")
 	private List<Scheduling> listAgendamentos;
 	 
+	public Doctor(Integer id, String name ,String crm, List<Scheduling> listAgendamentos, Boolean active) {
+		super();
+		this.id = id;
+		this.name = name; 
+		this.crm = crm;
+		this.listAgendamentos = listAgendamentos;
+		this.ativo = active;
+	}
+	
 	public Doctor(Integer id, String name ,String crm, List<Scheduling> listAgendamentos) {
 		super();
 		this.id = id;

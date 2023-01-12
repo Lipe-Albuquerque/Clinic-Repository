@@ -22,6 +22,12 @@ public class SchedulingController {
 	@Autowired
 	private SchedulingService agendamentoService;
 
+	@Autowired
+	public SchedulingController(SchedulingService agendamentoService) {
+		super();
+		this.agendamentoService = agendamentoService;
+	}
+
 	@GetMapping("/{id}")
 	public SchedulingDados findById(@PathVariable Integer id) {
 		return agendamentoService.findById(id);
@@ -49,7 +55,7 @@ public class SchedulingController {
 	public void edit(@PathVariable Integer id, @RequestBody SchedulingEdit agendamento) {
 		agendamentoService.edit(id, agendamento);
 	}
-	
+
 	@DeleteMapping("/{id}")
 	@Transactional
 	public void delete(@PathVariable Integer id) {

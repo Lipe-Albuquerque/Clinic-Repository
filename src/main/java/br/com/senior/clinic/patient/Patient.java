@@ -34,6 +34,23 @@ public class Patient {
 	public Patient() {
 
 	}
+	
+	public Patient(Integer id, String name, @CPF String cpf, List<Scheduling> listAgendamento) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.cpf = cpf;
+		this.listAgendamento = listAgendamento;
+	}
+	
+	public Patient(Integer id, String name, @CPF String cpf, List<Scheduling> listAgendamento, Boolean active) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.cpf = cpf;
+		this.listAgendamento = listAgendamento;
+		this.ativo = active;
+	}
 
 	public Patient(PatientAdd paciente) {
 		this.id = paciente.id();
@@ -120,5 +137,7 @@ public class Patient {
 		this.ativo = true;
 
 	}
+
+	
 
 }

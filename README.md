@@ -1,23 +1,20 @@
 # 👩🏻‍⚕️ Clinic 👨🏻‍⚕️
 
-To use the program, simply register, informing common data such as name, CPF (for the health professional, the CRM number for example), Patients will be able to search for which doctor will be available, they will be able to see their own appointments, change their dates and times, change professionals or even cancel an appointment.
+To use the program, simply register, informing common data such as name, CPF (for the health professional, the CRM number for example), they will be able to see their own appointments, change their dates and times, change professionals or even cancel an appointment.
 
 
 ## Project Versioning 🧩
+<br>
+
 ### Technologies : ![Git](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)&nbsp; ![GitLab](https://img.shields.io/badge/GitLab-330F63?style=for-the-badge&logo=gitlab&logoColor=white)&nbsp;
 
 <br>
-<br>
-<br>
  
 
-The packages were structured following the MVC (Model, View and Controller) Standard. We created and deployed a REST (REpresentational State Transfer) API using SpringBoot and MySQL, applying JPA (Java Persistence API) and Hibernate (an object/relational mapping tool for Java environments).
+The packages were structured following the MVC (Model, View and Controller) Standard. i created and deployed a REST (REpresentational State Transfer) API using SpringBoot and Postgres, applying JPA (Java Persistence API) and Hibernate (an object/relational mapping tool for Java environments).
 
-We applied data validation and exception handling and properly use the HTTP protocol. 
 
-The REST layer -  where we implemented our business logic - and the service layer,  has the power to access the data layer and the repositories. The services and repositories are the ones that communicate with the application's domain classe. In the classes, we are using the DTO (Data Transfer Object) Standard. 
-<br>
-<br>
+The REST layer -  where i implemented business logic - and the service layer,  has the power to access the data layer and the repositories. The services and repositories are the ones that communicate with the application's domain classe.
 <br>
 
 
@@ -40,11 +37,11 @@ The REST layer -  where we implemented our business logic - and the service laye
     - In the variable name and value fields, fill in: ``MAVEN_HOME`` and ``C:\maven\bin``, respectively. Press "Confirm" button.
     - Check if it worked by opening a new prompt and typing ``mvn -version``. If it worked, an error will appears.
 4. To install Eclipse
-    - Download Spring Tools Suite [here](https://www.eclipse.org/downloads/)
+    - Download Eclipse [here](https://www.eclipse.org/downloads/)
 5. Make a project copy to your machine:
       first:
      `git clone git@git.senior.com.br:treinamento/go-dev-2023-spring.git`
-      after cloning repository, alter for my branch:
+      after cloning repository, enter the project folder and change for my branch in gitbash or cmd:
      `git pull origin filipe-albuquerque`
 6. Import the project into your Eclipse.
     - File -> Import -> Maven -> Existing Maven Projects -> Next -> Browse -> Select Past of Project -> Finish
@@ -69,7 +66,7 @@ The REST layer -  where we implemented our business logic - and the service laye
 ## **Testing the requests**
 > Postman was the software we choose to test the application requests. It can be accessed on the browser or be downloaded [here.](https://www.postman.com/downloads/).
 
-[here](https://github.com/Lipe-Albuquerque/Clinic-Repository/tree/master/requestsClinic)´postman requests.
+[here](https://git.senior.com.br/treinamento/go-dev-2023-spring/-/tree/filipe-albuquerque/requestsClinic) postman requests.
 
 to import the postman requests, come:
 import -> upload -> select the `requestsClinic` file that is in the `requestsClinic` folder in the project.
