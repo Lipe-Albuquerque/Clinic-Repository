@@ -101,7 +101,7 @@ public class Doctor {
 		this.listAgendamentos.add(agendamento);
 	}
 
-	public void atualizarDados(doctorEdit doctor) {
+	public void atualizarDados(DoctorEdit doctor) {
 		if(doctor.name() != null) {
 			this.name = doctor.name();
 		}

@@ -9,9 +9,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PatientRepository extends JpaRepository<Patient, Integer>{
 
-	Page<Patient> findAllByAtivoTrue(Pageable paginacao);
+	Page<PatientList> findAllByAtivoTrue(Pageable paginacao);
 
-	Page<Patient> findAllByAtivoFalse(Pageable paginacao);
+	Page<PatientList> findAllByAtivoFalse(Pageable paginacao);
 
 	Patient findByCpf(String cpf);
 

@@ -47,7 +47,7 @@ public class DoctorController {
 
 	@PutMapping("/{id}")
 	@Transactional
-	public ResponseEntity<DoctorDados> edit(@PathVariable Integer id,@RequestBody doctorEdit doctor) {
+	public ResponseEntity<DoctorDados> edit(@PathVariable Integer id,@RequestBody DoctorEdit doctor) {
 		return ResponseEntity.ok().body(doctorService.edit(id,doctor));
 	}
 

@@ -49,7 +49,7 @@ public class DoctorService {
 		return response;
 	}
 
-	public DoctorDados edit(Integer id, doctorEdit doctor) {
+	public DoctorDados edit(Integer id, DoctorEdit doctor) {
 		if (doctorRepository.getReferenceById(id) == null) {
 			throw new IllegalArgumentException("doctor does not exist!");
 		}
@@ -65,6 +65,9 @@ public class DoctorService {
 		}
 		if (!agendamentoRepository.findByDoctorIdAndAtivoTrue(id).isEmpty()) {
 			throw new IllegalArgumentException("doctor cannot be deleted, as he has active appointments");
+		}
+		if(doctorRepository.findByIdAndAtivoFalse(id) != null) {
+			throw new IllegalArgumentException("doctor cannot be deleted, doctor already deactivated from the system");
 		}
 		doctorRepository.getReferenceById(id).delete();
 		return true;

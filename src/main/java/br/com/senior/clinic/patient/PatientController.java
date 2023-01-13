@@ -37,12 +37,12 @@ public class PatientController {
 
 	@GetMapping
 	public Page<PatientList> listarPacientes(@PageableDefault(size = 10, sort = { "name" }) Pageable paginacao) {
-		return pacienteService.listar(paginacao);
+		return pacienteService.findAllByAtivoTrue(paginacao);
 	}
 	
 	@GetMapping("/finalized")
 	public Page<PatientList> listarPacientesDesativados(@PageableDefault(size = 10, sort = { "name" }) Pageable paginacao) {
-		return pacienteService.listarDesativados(paginacao);
+		return pacienteService.findAllByAtivoFalse(paginacao);
 	}
 
 

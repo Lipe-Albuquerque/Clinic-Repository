@@ -17,12 +17,28 @@ public class PatientService {
 	private PatientRepository pacienteRepository;
 
 	@Autowired
-	private SchedulingRepository agendamentoRepository;
+	private SchedulingRepository schedulingRepository;
+
+	@Autowired
+	public PatientService(PatientRepository pacienteRepository, SchedulingRepository schedulingRepository) {
+		super();
+		this.pacienteRepository = pacienteRepository;
+		this.schedulingRepository = schedulingRepository;
+	}
 
 	public PatientDados findById(Integer id) {
 		Optional<Patient> paciente = pacienteRepository.findById(id);
 		PatientDados pacienteDados = new PatientDados(paciente);
 		return pacienteDados;
+	}
+
+	public Page<PatientList> findAllByAtivoTrue(Pageable paginacao) {
+		return pacienteRepository.findAllByAtivoTrue(paginacao);
+	}
+
+	public Page<PatientList> findAllByAtivoFalse(Pageable paginacao) {
+
+		return pacienteRepository.findAllByAtivoFalse(paginacao);
 	}
 
 	public PatientDados add(PatientAdd paciente) {
@@ -33,10 +49,6 @@ public class PatientService {
 		pacienteRepository.save(pacienteBanco);
 		PatientDados response = new PatientDados(pacienteBanco);
 		return response;
-	}
-
-	public Page<PatientList> listar(Pageable paginacao) {
-		return pacienteRepository.findAllByAtivoTrue(paginacao).map(PatientList::new);
 	}
 
 	public PatientDados edit(Integer id, PatientEdit paciente) {
@@ -53,34 +65,38 @@ public class PatientService {
 		if (pacienteRepository.findById(id) == null) {
 			throw new IllegalArgumentException("patient does not exist!");
 		}
-		if (!agendamentoRepository.findByPatientIdAndAtivoTrue(id).isEmpty()) {
+		if (!schedulingRepository.findByPatientIdAndAtivoTrue(id).isEmpty()) {
 			throw new IllegalArgumentException("patient cannot be deleted, as he has active appointments");
+		}
+		if (pacienteRepository.findByIdAndAtivoFalse(id) != null) {
+			throw new IllegalArgumentException(
+					"patient cannot be deleted, patient already deactivated from the system");
 		}
 		pacienteRepository.getReferenceById(id).deletar();
 		return true;
 	}
 
-	public Page<PatientList> listarDesativados(Pageable paginacao) {
-
-		return pacienteRepository.findAllByAtivoFalse(paginacao).map(PatientList::new);
-	}
-
 	public Page<SchedulingList> listarAgendamentoAberto(Pageable paginacao, Integer id) {
 
-		return agendamentoRepository.findAllByPatientIdAndAtivoTrue(paginacao, id);
+		return schedulingRepository.findAllByPatientIdAndAtivoTrue(paginacao, id);
 
 	}
 
 	public Page<SchedulingList> listarAgendamentoFechado(Pageable paginacao, Integer id) {
 
-		return agendamentoRepository.findAllByPatientIdAndAtivoFalse(paginacao, id);
+		return schedulingRepository.findAllByPatientIdAndAtivoFalse(paginacao, id);
 
 	}
 
 	public boolean ativarPatient(Integer id) {
 
-		pacienteRepository.findByIdAndAtivoFalse(id).ativar();
-		return true;
+		if (pacienteRepository.findByIdAndAtivoFalse(id) != null) {
+			pacienteRepository.findByIdAndAtivoFalse(id).ativar();
+			return true;
+		} else {
+			throw new IllegalArgumentException("PATIENT DOES NOT EXIST OR IS ALREADY ACTIVO");
+		}
+
 	}
 
 }
