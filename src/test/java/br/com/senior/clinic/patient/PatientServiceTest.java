@@ -4,6 +4,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.when;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -15,8 +18,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -28,7 +29,7 @@ import br.com.senior.clinic.scheduling.SchedulingList;
 import br.com.senior.clinic.scheduling.SchedulingRepository;
 
 @SpringBootTest
-class PatientServiceTest extends Mockito {
+class PatientServiceTest{
 
 	private final int id = 1;
 	private final int doctorId = 1;
@@ -56,7 +57,7 @@ class PatientServiceTest extends Mockito {
 	
 	private Patient patientEntityDesativado;
 
-	private Optional<Patient> optional;
+//	private Optional<Patient> optional;
 
 	private Doctor doctorEntity;
 
@@ -92,14 +93,14 @@ class PatientServiceTest extends Mockito {
 
 	@BeforeEach
 	public void initi() {
-		MockitoAnnotations.openMocks(this);
 		startPatient();
-
 	}
 
 	@Test
 	void findById() {
-		when(patientRepository.findById(1)).thenReturn(optional);
+		
+		
+		when(patientRepository.findById(1)).thenReturn(Optional.of(patientEntity));
 		PatientDados response = patientService.findById(1);
 		assertEquals(PatientDados.class, response.getClass());
 	}
@@ -140,7 +141,7 @@ class PatientServiceTest extends Mockito {
 
 	@Test
 	void delete() {
-		when(patientRepository.findById(anyInt())).thenReturn(optional);
+		when(patientRepository.findById(anyInt())).thenReturn(Optional.of(patientEntity));
 		when(patientRepository.getReferenceById(anyInt())).thenReturn(patientEntity);
 		when(schedulingRepository.findByPatientIdAndAtivoTrue(anyInt())).thenReturn(Collections.emptyList());
 		when(patientRepository.findByIdAndAtivoFalse(anyInt())).thenReturn(null);
@@ -226,7 +227,7 @@ class PatientServiceTest extends Mockito {
 
 		schedulingRecordListVencido = new SchedulingList(id, descricao, vencido, doctorId, patientId, false);
 
-		optional = Optional.of(patientEntity);
+//		optional = Optional.of(patientEntity);
 
 		patientDados = new PatientDados(patientEntity);
 

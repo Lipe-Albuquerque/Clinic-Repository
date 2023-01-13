@@ -3,6 +3,8 @@ package br.com.senior.clinic.scheduling;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -13,8 +15,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -28,7 +28,7 @@ import br.com.senior.clinic.patient.PatientDados;
 import br.com.senior.clinic.patient.PatientRepository;
 
 @SpringBootTest
-class SchedulingServiceTest extends Mockito {
+class SchedulingServiceTest {
 
 	private final int id = 1;
 	private final int doctorId = 1;
@@ -88,9 +88,7 @@ class SchedulingServiceTest extends Mockito {
 
 	@BeforeEach
 	public void initi() {
-		MockitoAnnotations.openMocks(this);
 		startScheduling();
-
 	}
 
 	@Test

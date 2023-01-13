@@ -19,6 +19,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -27,7 +28,7 @@ import br.com.senior.clinic.patient.Patient;
 import br.com.senior.clinic.scheduling.Scheduling;
 import br.com.senior.clinic.scheduling.SchedulingList;
 import br.com.senior.clinic.scheduling.SchedulingRepository;
-
+@SpringBootTest
 class DoctorServiceTest {
 
 	private final int id = 1;
@@ -93,7 +94,6 @@ class DoctorServiceTest {
 	
 	@BeforeEach
 	public void initi() {
-		MockitoAnnotations.openMocks(this);
 		startDoctor();
 
 	}
@@ -112,7 +112,6 @@ class DoctorServiceTest {
 		when(doctorRepository.getReferenceById(anyInt())).thenReturn(doctorEntity);
 		doctorService.add(doctorAdd);
 		DoctorDados response = new DoctorDados(doctorRepository.getReferenceById(doctorEntity.getId()));
-
 		assertNotNull(response);
 		assertEquals(doctorId, response.id());
 		assertEquals(nameDoctor, response.name());
