@@ -71,6 +71,14 @@ The REST layer -  where i implemented business logic - and the service layer,  h
 to import the postman requests, come:
 import -> upload -> select the `requestsClinic` file that is in the `requestsClinic` folder in the project.
 
+## **Unitary tests**
+> Unit tests performed using the Mockito java library, all CRUD following the unit test pattern.
+
+Tests are located at:
+
+(src / test / java).
+
+can be used with the JUnit library.
 
 <table align="center">
   <tr>
