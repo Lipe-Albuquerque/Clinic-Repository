@@ -16,5 +16,9 @@ public record SchedulingDados(Integer id,@JsonFormat(pattern = "dd/MM/yyyy HH:mm
 				new DoctorDados(agendamento.get().getDoctor()), new PatientDados(agendamento.get().getPaciente()),
 				agendamento.get().getDescricao(), agendamento.get().getAtivo());
 	}
+	
+	public SchedulingDados(Scheduling agendamento) {
+		this(agendamento.getId(), agendamento.getDataConsulta(), new DoctorDados(agendamento.getDoctor()), new PatientDados(agendamento.getPaciente()), agendamento.getDescricao(), agendamento.getAtivo());
+	}
 
 }

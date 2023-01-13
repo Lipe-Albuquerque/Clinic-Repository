@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import br.com.senior.clinic.doctor.DoctorRepository;
@@ -51,7 +52,7 @@ public class SchedulingService {
 		return agendamentoRepository.findAllByAtivoFalse(paginacao);
 	}
 
-	public void add(SchedulingAdd agendamento) {
+	public SchedulingDados add(SchedulingAdd agendamento) {
 		if (agendamento.dataConsulta().isBefore(LocalDateTime.now().plusHours(1))) {
 			throw new IllegalArgumentException(
 					"YOUR APPOINTMENT MUST BE BOOKED AT LEAST ONE HOUR IN ADVANCE, PLEASE CORRECT THE INSERTED DATE, ");
@@ -85,10 +86,12 @@ public class SchedulingService {
 		agendamentoNew.setPaciente(patientRepository.getReferenceById(agendamento.patient()));
 		patientRepository.getReferenceById(agendamentoNew.getPaciente().getId()).addAgendamento(agendamentoNew);
 		agendamentoRepository.save(agendamentoNew);
+		SchedulingDados response = new SchedulingDados(agendamentoNew);
+		return response;
 	}
 
-	public void edit(Integer id, SchedulingEdit agendamento) {
-		if (agendamentoRepository.findById(id) != null) {
+	public SchedulingDados edit(Integer id, SchedulingEdit agendamento) {
+		if (agendamentoRepository.findByIdAndAtivoTrue(id) != null) {
 			agendamentoRepository.getReferenceById(id).edit(agendamento);
 
 			if (doctorRepository.getReferenceById(agendamento.doctor_id()) != null) {
@@ -101,10 +104,11 @@ public class SchedulingService {
 		} else {
 			throw new IllegalArgumentException("schedule does not exist");
 		}
-
+		SchedulingDados response = new SchedulingDados(agendamentoRepository.getReferenceById(id));
+		return response;
 	}
 
-	public void delete(Integer id) {
+	public Boolean delete(Integer id) {
 
 		if (agendamentoRepository.findById(id) == null) {
 			throw new IllegalArgumentException("schedule does not exist!");
@@ -113,7 +117,7 @@ public class SchedulingService {
 			throw new IllegalArgumentException("Appointment already cancelled/finalized!");
 		}
 		agendamentoRepository.getReferenceById(id).delete();
-
+		return true;
 	}
 
 }

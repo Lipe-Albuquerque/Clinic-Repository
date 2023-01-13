@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,8 +30,8 @@ public class SchedulingController {
 	}
 
 	@GetMapping("/{id}")
-	public SchedulingDados findById(@PathVariable Integer id) {
-		return agendamentoService.findById(id);
+	public ResponseEntity<SchedulingDados> findById(@PathVariable Integer id) {
+		return ResponseEntity.ok().body(agendamentoService.findById(id));
 	}
 
 	@GetMapping
@@ -46,19 +47,19 @@ public class SchedulingController {
 
 	@PostMapping
 	@Transactional
-	public void add(@RequestBody SchedulingAdd agendamento) {
-		agendamentoService.add(agendamento);
+	public ResponseEntity<SchedulingDados> add(@RequestBody SchedulingAdd agendamento) {
+		return ResponseEntity.ok().body(agendamentoService.add(agendamento));
 	}
 
 	@PutMapping("/{id}")
 	@Transactional
-	public void edit(@PathVariable Integer id, @RequestBody SchedulingEdit agendamento) {
-		agendamentoService.edit(id, agendamento);
+	public ResponseEntity<SchedulingDados> edit(@PathVariable Integer id, @RequestBody SchedulingEdit agendamento) {
+		return ResponseEntity.ok().body(agendamentoService.edit(id, agendamento));
 	}
 
 	@DeleteMapping("/{id}")
 	@Transactional
-	public void delete(@PathVariable Integer id) {
-		agendamentoService.delete(id);
+	public Boolean delete(@PathVariable Integer id) {
+		return agendamentoService.delete(id);
 	}
 }

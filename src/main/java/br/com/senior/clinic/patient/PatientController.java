@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,8 +31,8 @@ public class PatientController {
 
 	@PostMapping
 	@Transactional
-	public Patient adicionarPaciente(@RequestBody PatientAdd paciente) {
-		return pacienteService.add(paciente);
+	public ResponseEntity<PatientDados> adicionarPaciente(@RequestBody PatientAdd paciente) {
+		return ResponseEntity.ok().body(pacienteService.add(paciente));
 	}
 
 	@GetMapping
@@ -39,7 +40,7 @@ public class PatientController {
 		return pacienteService.listar(paginacao);
 	}
 	
-	@GetMapping("/desativados")
+	@GetMapping("/finalized")
 	public Page<PatientList> listarPacientesDesativados(@PageableDefault(size = 10, sort = { "name" }) Pageable paginacao) {
 		return pacienteService.listarDesativados(paginacao);
 	}
@@ -47,14 +48,14 @@ public class PatientController {
 
 	@PutMapping("/{id}")
 	@Transactional
-	public void editarPaciente(@PathVariable Integer id ,@RequestBody PatientEdit paciente) {
-		pacienteService.edit(id,paciente);
+	public ResponseEntity<PatientDados> editarPaciente(@PathVariable Integer id ,@RequestBody PatientEdit paciente) {
+		return ResponseEntity.ok().body(pacienteService.edit(id,paciente));
 	}
 
 	@DeleteMapping("/{id}")
 	@Transactional
-	public void deletePaciente(@PathVariable Integer id) {
-		pacienteService.delete(id);
+	public boolean deletePaciente(@PathVariable Integer id) {
+		return pacienteService.delete(id);
 	}
 	
 	@GetMapping("/scheduling/{id}")
@@ -69,8 +70,8 @@ public class PatientController {
 	
 	@PutMapping("active/{id}")
 	@Transactional
-	public void ativarPatient(@PathVariable Integer id) {
-		pacienteService.ativarPatient(id);
+	public boolean ativarPatient(@PathVariable Integer id) {
+		return pacienteService.ativarPatient(id);
 	}
 	
 }

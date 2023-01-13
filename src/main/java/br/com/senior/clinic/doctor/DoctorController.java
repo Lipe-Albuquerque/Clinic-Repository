@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -40,20 +41,20 @@ public class DoctorController {
 
 	@PostMapping
 	@Transactional
-	public Doctor add(@RequestBody DoctorAdd doctor) {
-		return doctorService.add(doctor);
+	public ResponseEntity<DoctorDados> add(@RequestBody DoctorAdd doctor) {
+		return ResponseEntity.ok().body(doctorService.add(doctor));
 	}
 
 	@PutMapping("/{id}")
 	@Transactional
-	public void edit(@PathVariable Integer id,@RequestBody doctorEdit doctor) {
-		doctorService.edit(id,doctor);
+	public ResponseEntity<DoctorDados> edit(@PathVariable Integer id,@RequestBody doctorEdit doctor) {
+		return ResponseEntity.ok().body(doctorService.edit(id,doctor));
 	}
 
 	@DeleteMapping("/{id}")
 	@Transactional
-	public void delete(@PathVariable Integer id) {
-		doctorService.delete(id);
+	public boolean delete(@PathVariable Integer id) {
+		return doctorService.delete(id);
 	}
 
 	@GetMapping("/scheduling/{id}")
@@ -70,8 +71,8 @@ public class DoctorController {
 
 	@PutMapping("active/{id}")
 	@Transactional
-	public void ativarPatient(@PathVariable Integer id) {
-		doctorService.ativarDoctor(id);
+	public boolean ativarPatient(@PathVariable Integer id) {
+		return doctorService.ativarDoctor(id);
 	}
 	
 	

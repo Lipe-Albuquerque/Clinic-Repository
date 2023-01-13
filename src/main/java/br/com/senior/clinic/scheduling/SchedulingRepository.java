@@ -34,4 +34,6 @@ public interface SchedulingRepository extends JpaRepository<Scheduling, Integer>
 
 	Page<SchedulingList> findAllByDoctorIdAndAtivoFalse(Pageable paginacao, Integer id);
 
+	Scheduling findByIdAndAtivoTrue(Integer id);
+
 }

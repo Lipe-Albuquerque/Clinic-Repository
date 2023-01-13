@@ -42,21 +42,24 @@ public class DoctorService {
 		return doctorRepository.findAllByAtivoFalse(paginacao);
 	}
 
-	public Doctor add(DoctorAdd doctor) {
+	public DoctorDados add(DoctorAdd doctor) {
 		Doctor doctorAdd = new Doctor(doctor);
-		doctorRepository.saveAndFlush(doctorAdd);
-		return doctorAdd;
+		doctorRepository.save(doctorAdd);
+		DoctorDados response = new DoctorDados(doctorAdd);
+		return response;
 	}
 
-	public void edit(Integer id, doctorEdit doctor) {
+	public DoctorDados edit(Integer id, doctorEdit doctor) {
 		if (doctorRepository.getReferenceById(id) == null) {
 			throw new IllegalArgumentException("doctor does not exist!");
 		}
 		Doctor doctorEdit = doctorRepository.getReferenceById(id);
 		doctorEdit.atualizarDados(doctor);
+		DoctorDados response = new DoctorDados(doctorRepository.getReferenceById(id));
+		return response;
 	}
 
-	public void delete(Integer id) {
+	public boolean delete(Integer id) {
 		if (doctorRepository.findById(id) == null) {
 			throw new IllegalArgumentException("doctor does not exist!");
 		}
@@ -64,6 +67,7 @@ public class DoctorService {
 			throw new IllegalArgumentException("doctor cannot be deleted, as he has active appointments");
 		}
 		doctorRepository.getReferenceById(id).delete();
+		return true;
 	}
 
 	public Page<SchedulingList> listarAgendamentoAberto(Pageable paginacao, Integer id) {
@@ -78,10 +82,11 @@ public class DoctorService {
 
 	}
 
-	public void ativarDoctor(Integer id) {
+	public boolean ativarDoctor(Integer id) {
 
 		if (doctorRepository.findByIdAndAtivoFalse(id) != null) {
 			doctorRepository.findByIdAndAtivoFalse(id).ativar();
+			return true;
 		} else {
 			throw new IllegalArgumentException("DOCTOR DOES NOT EXIST OR IS ALREADY ACTIVO");
 		}

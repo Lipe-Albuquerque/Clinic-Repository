@@ -21,6 +21,7 @@ import org.springframework.data.domain.PageRequest;
 
 import br.com.senior.clinic.doctor.Doctor;
 import br.com.senior.clinic.doctor.DoctorDados;
+import br.com.senior.clinic.doctor.DoctorRepository;
 import br.com.senior.clinic.patient.Patient;
 import br.com.senior.clinic.patient.PatientDados;
 
@@ -28,6 +29,8 @@ import br.com.senior.clinic.patient.PatientDados;
 class SchedulingServiceTest extends Mockito {
 
 	private final int id = 1;
+	private final int doctorId = 1;
+	private final int patientId = 1;
 	private final boolean active = true;
 	private final String nameDoctor = "filipe";
 	private final String namePatient = "rafael";
@@ -44,6 +47,9 @@ class SchedulingServiceTest extends Mockito {
 
 	@Mock
 	private SchedulingRepository repository;
+	
+	@Mock
+	private DoctorRepository doctorRepository;
 
 	private Optional<Scheduling> schedulingOptional;
 
@@ -62,6 +68,8 @@ class SchedulingServiceTest extends Mockito {
 	private PatientDados patientDados;
 	
 	private SchedulingEdit schedulingEdit;
+	
+	private SchedulingAdd schedulingAdd;
 
 	private Doctor doctor;
 
@@ -111,15 +119,26 @@ class SchedulingServiceTest extends Mockito {
 
 	@Test
 	void DeveriaAtualizarADataDoAgendamento() {
-		SchedulingEdit schedulingEntidade = new SchedulingEdit("deubom", null, null);
+		SchedulingEdit schedulingEntidade = new SchedulingEdit("deubom", LocalDateTime.of(2024, 05, 05, 05, 30), 1);
 		
-		when(repository.findById(1)).thenReturn(schedulingOptional);
-//		when(repository.getReferenceById(id).edit(schedulingEntidade));
+		when(repository.getReferenceById(1)).thenReturn(scheduling);
+		when(repository.findByIdAndAtivoTrue(1)).thenReturn(scheduling);
+		when(doctorRepository.getReferenceById(1)).thenReturn(scheduling.getDoctor());
 		
 		service.edit(1, schedulingEntidade);
-		assertEquals(schedulingEntidade.description(), schedulingOptional.get().getDescricao());
+		assertEquals(schedulingEntidade.description(), scheduling.getDescricao());
+		assertEquals(schedulingEntidade.dataConsulta(), scheduling.getDataConsulta());
 		
 	}
+	
+//	@Test
+//	void DeveriaCriarUmaEntidadeDeAgendamento() {
+//		when(repository.save(any())).thenReturn(scheduling);
+//		
+//		service.add(schedulingAdd);
+//		
+////		assertEquals(, null);
+//	}
 
 	private void startScheduling() {
 
@@ -135,11 +154,13 @@ class SchedulingServiceTest extends Mockito {
 
 		schedulingVencido = new Scheduling(id, vencido, doctor, patient, descricao, active);
 
-		schedulingRecordList = new SchedulingList(id, descricao, plusDays, id, id, active);
+		schedulingRecordList = new SchedulingList(id, descricao, plusDays, doctorId, patientId, active);
 
-		schedulingRecordListVencido = new SchedulingList(id, descricao, vencido, id, id, false);
+		schedulingRecordListVencido = new SchedulingList(id, descricao, vencido, doctorId, patientId, false);
 
 		schedulingOptional = Optional.of(new Scheduling(id, plusDays, doctor, patient, descricao, active));
+
+		schedulingAdd = new SchedulingAdd(id, plusDays, doctorId, patientId, descricao);
 
 		schedulingEdit = new SchedulingEdit(descricao, LocalDateTime.of(2023, 10, 20, 10, 20), 1) ;
 		
